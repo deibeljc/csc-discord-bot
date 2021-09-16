@@ -33,8 +33,14 @@ function Ping() {
           .setName("category")
           .setDescription("Testing")
           .setRequired(true)
-          .addChoice("Test 1", "1")
-          .addChoice("Test 2", "2")
+          .addChoices([
+            ["Test 1", "1"],
+            ["Test 2", "2"],
+          ])
+          .addChoices([
+            ["Test 3", "1"],
+            ["Test 4", "2"],
+          ])
       )
       .toJSON(),
     handler,
