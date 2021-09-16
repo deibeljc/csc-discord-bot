@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
+    "prisma": "prisma",
     "postinstall": "tsc",
     "tsc": "tsc",
     "build": "prisma generate",

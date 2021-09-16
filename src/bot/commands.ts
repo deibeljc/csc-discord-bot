@@ -28,6 +28,14 @@ function Ping() {
     command: new SlashCommandBuilder()
       .setName(commandName)
       .setDescription("Replies pong")
+      .addStringOption((option) =>
+        option
+          .setName("category")
+          .setDescription("Testing")
+          .setRequired(true)
+          .addChoice("Test 1", "1")
+          .addChoice("Test 2", "2")
+      )
       .toJSON(),
     handler,
   };

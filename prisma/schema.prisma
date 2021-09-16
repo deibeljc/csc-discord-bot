@@ -3,10 +3,44 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("HEROKU_POSTGRESQL_GOLD_URL")
+}
+
+model Franchise {
+  id    String @id @default(cuid())
+  Teams Team[]
+}
+
+model Team {
+  id          String     @id @default(cuid())
+  Players     Player[]
+  HomeMatches Match[]    @relation(name: "homeTeam")
+  AwayMatches Match[]    @relation("awayTeam")
+  Franchise   Franchise? @relation(fields: [franchiseId], references: [id])
+  franchiseId String?
 }
 
 model Player {
-  id String @id @default(cuid())
+  id        String  @id @default(cuid())
+  Team      Team?   @relation(fields: [teamId], references: [id])
+  teamId    String?
+  freeAgent Boolean @default(false)
+}
+
+model Season {
+  id      String  @id @default(cuid())
+  number  Int // The season number
+  Matches Match[]
+}
+
+model Match {
+  id         String  @id @default(cuid())
+  HomeTeam   Team    @relation(fields: [homeTeamId], references: [id], name: "homeTeam")
+  homeTeamId String
+  AwayTeam   Team    @relation(fields: [awayTeamId], references: [id], name: "awayTeam")
+  awayTeamId String
+  Season     Season? @relation(fields: [seasonId], references: [id])
+  seasonId   String?
 }
