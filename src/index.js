@@ -12,52 +12,6 @@ app.get(`/api`, async (req, res) => {
   res.json({ up: true })
 })
 
-app.get(`/api/seed`, async (req, res) => {
-  const seedUser = {
-    email: 'jane@prisma.io',
-    name: 'Jane',
-    posts: {
-      create: [
-        {
-          title:
-            'Comparing Database Types: How Database Types Evolved to Meet Different Needs',
-          content:
-            'https://www.prisma.io/blog/comparison-of-database-models-1iz9u29nwn37/',
-          published: true,
-        },
-        {
-          title: 'Analysing Sleep Patterns: The Quantified Self',
-          content: 'https://quantifiedself.com/get-started/',
-          published: true,
-        },
-      ],
-    },
-  }
-
-  try {
-    await prisma.post.deleteMany({
-      where: {
-        author: {
-          email: 'jane@prisma.io',
-        },
-      },
-    })
-    await prisma.user.deleteMany({
-      where: {
-        email: 'jane@prisma.io',
-      },
-    })
-
-    const result = await prisma.user.create({
-      data: seedUser,
-    })
-    res.json(result)
-  } catch (e) {
-    console.error(e)
-    res.sendStatus(500)
-  }
-})
-
 app.post(`/api/user`, async (req, res) => {
   const result = await prisma.user.create({
     data: {
