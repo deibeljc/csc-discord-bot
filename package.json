@@ -5,7 +5,7 @@
   "scripts": {
     "postinstall": "tsc",
     "tsc": "tsc",
-    "build": "prisma generate && tsc",
+    "build": "prisma generate",
     "dev": "PORT=3000 ts-node src/index.ts",
     "start": "node dist/index.js"
   },

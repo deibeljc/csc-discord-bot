@@ -1,25 +1,16 @@
 import { Client, Intents } from "discord.js";
 import { REST } from "@discordjs/rest";
-import { SlashCommandBuilder } from "@discordjs/builders";
-import { Routes } from "discord-api-types/v9";
+import { APIApplicationCommandOption, Routes } from "discord-api-types/v9";
 
 const token = process.env.DISCORD_TOKEN as string;
 const clientId = process.env.DISCORD_CLIENT_ID as string;
 const guildId = "796914528709247016";
 
-const commands = [
-  new SlashCommandBuilder()
-    .setName("ping")
-    .setDescription("Replies pong")
-    .toJSON(),
-];
-
 const rest = new REST({ version: "9" }).setToken(token);
 
-function initClient() {
+export async function initClient(): Promise<Client> {
+  const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
   return new Promise((resolve) => {
-    const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
-
     client.once("ready", () => {
       console.log("Client is ready");
       resolve(client);
@@ -29,10 +20,14 @@ function initClient() {
   });
 }
 
-export default async function initBot() {
+export async function initCommands(
+  commands: {
+    name: string;
+    description: string;
+    options: APIApplicationCommandOption[];
+  }[]
+) {
   try {
-    await initClient();
-
     console.log("Started refreshing application (/) commands.");
 
     await rest.put(Routes.applicationGuildCommands(clientId, guildId), {

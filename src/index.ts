@@ -1,7 +1,8 @@
 import express from "express";
 import bodyParser from "body-parser";
 import { PrismaClient } from "@prisma/client";
-import initBot from "./bot";
+import { initClient, initCommands } from "./bot/init";
+import { initCommandHandlers } from "./bot/commands";
 
 const prisma = new PrismaClient();
 const app = express();
@@ -20,4 +21,10 @@ const server = app.listen(PORT, () =>
   )
 );
 
-initBot();
+async function init() {
+  const client = await initClient();
+  const commands = await initCommandHandlers(client);
+  await initCommands(commands);
+}
+
+init();
