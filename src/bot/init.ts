@@ -20,13 +20,7 @@ export async function initClient(): Promise<Client> {
   });
 }
 
-export async function initCommands(
-  commands: {
-    name: string;
-    description: string;
-    options: APIApplicationCommandOption[];
-  }[]
-) {
+export async function initCommands(commands: any) {
   try {
     console.log("Started refreshing application (/) commands.");
 
