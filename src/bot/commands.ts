@@ -148,7 +148,6 @@ function Create() {
             opt
               .setName(`acronym`)
               .setDescription(`Acryonym of the ${subCommands.team}`)
-              .setRequired(true)
           )
       ),
     handler,
