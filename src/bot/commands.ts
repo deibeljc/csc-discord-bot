@@ -23,7 +23,7 @@ export function initCommandHandlers(client: Client) {
       // If we are a subcommand, resolve the command with a subcommand
       if (
         command.commandName === interaction.commandName &&
-        interaction.options.getSubcommand() in command.subCommands
+        command.subCommands.includes(interaction.options.getSubcommand())
       ) {
         await interaction.reply(
           await command.handler(
@@ -40,7 +40,7 @@ export function initCommandHandlers(client: Client) {
 
 function Ping() {
   const commandName = `ping`;
-  enum subCommands {}
+  const subCommands: string[] = [];
   async function handler(interaction: Interaction) {
     return `Pong`;
   }
@@ -67,12 +67,8 @@ function Ping() {
 }
 
 function Create() {
-  enum subCommands {
-    Player = `player`,
-    Franchise = `franchise`,
-    Team = `team`,
-  }
   const commandName = `create`;
+  const subCommands = [`player`, `franchise`, `team`];
   async function handler(interaction: Interaction, subCommand?: string) {
     return `Player created with ${subCommand}`;
   }
@@ -84,17 +80,13 @@ function Create() {
       .setName(commandName)
       .setDescription(`Create`)
       .addSubcommand((subCommand) =>
-        subCommand
-          .setName(subCommands.Player)
-          .setDescription(`Creates a player`)
+        subCommand.setName(subCommands[0]).setDescription(`Creates a player`)
       )
       .addSubcommand((subCommand) =>
-        subCommand
-          .setName(subCommands.Franchise)
-          .setDescription(`Creates a franchise`)
+        subCommand.setName(subCommands[1]).setDescription(`Creates a franchise`)
       )
       .addSubcommand((subCommand) =>
-        subCommand.setName(subCommands.Team).setDescription(`Creates a team`)
+        subCommand.setName(subCommands[2]).setDescription(`Creates a team`)
       ),
     handler,
   };
