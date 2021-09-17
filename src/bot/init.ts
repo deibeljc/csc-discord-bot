@@ -24,8 +24,6 @@ export async function initCommands(commands: any) {
   try {
     console.log(`Started refreshing application (/) commands.`);
 
-    console.log(JSON.stringify(commands));
-
     await rest.put(Routes.applicationGuildCommands(clientId, guildId), {
       body: commands,
     });

@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { Client, CommandInteraction, Interaction } from "discord.js";
+import { Client, CommandInteraction } from "discord.js";
 import { prisma } from "..";
 
 export function initCommandHandlers(client: Client) {
@@ -24,7 +24,9 @@ export function initCommandHandlers(client: Client) {
         )
       ) {
         console.log(
-          `Handling ${interaction}. SubCommand ${interaction.options.getSubcommand()}`
+          `Handling ${
+            interaction.commandName
+          }. SubCommand ${interaction.options.getSubcommand()}`
         );
         await interaction.reply(
           await command.handler(
@@ -80,7 +82,7 @@ function Create() {
         res = await prisma.player.create({
           data: {
             name: interaction.options.getString(`name`) ?? `no name`,
-            discordId: interaction.user.id,
+            discordId: interaction.options.getUser(`user`)?.id ?? ``,
             freeAgent: false,
             steamId: ``,
           },
@@ -121,6 +123,12 @@ function Create() {
             opt
               .setName(`name`)
               .setDescription(`Name of the ${subCommands.player}`)
+              .setRequired(true)
+          )
+          .addUserOption((opt) =>
+            opt
+              .setName(`user`)
+              .setDescription(`Player's discord name`)
               .setRequired(true)
           )
       )
