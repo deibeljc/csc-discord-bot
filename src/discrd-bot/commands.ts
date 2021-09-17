@@ -139,6 +139,7 @@ function Create() {
               .setName(`tier`)
               .setDescription(`Tier for the ${subCommands.player}`)
               .addChoices(tierChoices)
+              .setRequired(true)
           )
       )
       .addSubcommand((subCommand) =>
@@ -173,6 +174,7 @@ function Create() {
               .setName(`tier`)
               .setDescription(`Tier for the ${subCommands.team}`)
               .addChoices(tierChoices)
+              .setRequired(true)
           )
       ),
     handler,
