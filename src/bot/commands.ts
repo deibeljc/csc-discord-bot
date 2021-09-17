@@ -8,9 +8,6 @@ export function initCommandHandlers(client: Client) {
     if (!interaction.isCommand()) return;
 
     for (const command of commands) {
-      console.log(
-        `Handling ${interaction}. SubCommand ${interaction.options.getSubcommand()}`
-      );
       // If we are only a top level command, resolve that way
       if (
         command.commandName === interaction.commandName &&
@@ -23,6 +20,9 @@ export function initCommandHandlers(client: Client) {
         command.commandName === interaction.commandName &&
         command.subCommands.includes(interaction.options.getSubcommand())
       ) {
+        console.log(
+          `Handling ${interaction}. SubCommand ${interaction.options.getSubcommand()}`
+        );
         await interaction.reply(
           await command.handler(
             interaction,
@@ -38,14 +38,13 @@ export function initCommandHandlers(client: Client) {
 
 function Ping() {
   const commandName = `ping`;
-  const subCommands: string[] = [];
   async function handler(interaction: CommandInteraction) {
     return `Pong`;
   }
 
   return {
     commandName,
-    subCommands,
+    subCommands: [] as string[],
     command: new SlashCommandBuilder()
       .setName(commandName)
       .setDescription(`Replies pong`)
@@ -68,7 +67,9 @@ function Create() {
   const commandName = `create`;
   const subCommands = [`player`, `franchise`, `team`];
   async function handler(interaction: CommandInteraction, subCommand?: string) {
-    return `Player created with ${subCommand}`;
+    return `${subCommand} ${JSON.stringify(
+      interaction.options.data
+    )} created`;
   }
 
   return {
