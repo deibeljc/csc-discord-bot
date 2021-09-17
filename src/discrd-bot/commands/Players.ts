@@ -7,12 +7,14 @@ export function Players() {
   const commandName = `players`;
   async function handler(interaction: CommandInteraction) {
     console.log(`Handling players command`);
-    if (interaction.options.getString(`tier`)) {
+    if (interaction.options.getString(`tier`, false)) {
       return JSON.stringify(
         (
           await prisma.player.findMany({
             where: {
-              tier: interaction.options.getString(`tier`) as Tier,
+              tier: {
+                equals: interaction.options.getString(`tier`) as Tier,
+              },
             },
           })
         ).map((player) => player.name)
