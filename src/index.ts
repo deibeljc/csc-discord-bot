@@ -16,9 +16,7 @@ app.get(`/api`, async (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () =>
-  console.log(
-    `🚀 Server ready at: http://localhost:${PORT}\n⭐️ See sample requests: http://pris.ly/e/ts/rest-express#3-using-the-rest-api`
-  )
+  console.log(`🚀 Server ready at: http://localhost:${PORT}\n⭐️`)
 );
 
 async function init() {

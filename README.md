@@ -1,10 +1,15 @@
-# Heroku deployment example
+# CSC Server
 
-[Deployment guide](https://www.prisma.io/docs/guides/deployment/deploying-to-heroku)
+General CSC API server.
 
-## Download manually
+## What is this?
 
-```bash
-curl https://codeload.github.com/prisma/prisma-examples/tar.gz/latest | tar -xz --strip=2 prisma-examples-latest/deployment-platforms/heroku
-cd heroku
-```
+This server contains all relevant CSC information to run the league effectively. It will contain all franchises, teams, players, matches, transactions, and so forth. It will then surface that information easily through a few different avenues.
+
+1. A Discord Bot that has commands to both create and update data as well as view relevant information for both players and admins
+2. A REST/Graphql API that offers the same ability to interact with the data. This can be easily consumed by a front-end.
+
+## API Surfaces
+
+- Graphql API
+- Discord bot
