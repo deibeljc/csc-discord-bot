@@ -6,6 +6,7 @@ import { prisma } from "../..";
 export function Players() {
   const commandName = `players`;
   async function handler(interaction: CommandInteraction) {
+    console.log(`Handling players command`);
     if (interaction.options.getString(`tier`)) {
       return JSON.stringify(
         (
@@ -28,11 +29,11 @@ export function Players() {
     subCommands: {},
     command: new SlashCommandBuilder()
       .setName(commandName)
-      .setDescription(`Replies pong`)
+      .setDescription(`Get all the players`)
       .addStringOption((option) =>
         option
           .setName(`tier`)
-          .setDescription(`Get players for all tiers or a specified one`)
+          .setDescription(`Get players for a specified tier`)
           .addChoices(tierChoices)
       )
       .toJSON(),
