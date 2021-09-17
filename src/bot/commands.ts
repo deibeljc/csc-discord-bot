@@ -1,5 +1,6 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { Client, CommandInteraction, Interaction } from "discord.js";
+import { prisma } from "..";
 
 export function initCommandHandlers(client: Client) {
   const commands = [Ping(), Create()];
@@ -18,7 +19,9 @@ export function initCommandHandlers(client: Client) {
       // If we are a subcommand, resolve the command with a subcommand
       if (
         command.commandName === interaction.commandName &&
-        command.subCommands.includes(interaction.options.getSubcommand())
+        Object.keys(command.subCommands).includes(
+          interaction.options.getSubcommand()
+        )
       ) {
         console.log(
           `Handling ${interaction}. SubCommand ${interaction.options.getSubcommand()}`
@@ -44,7 +47,7 @@ function Ping() {
 
   return {
     commandName,
-    subCommands: [] as string[],
+    subCommands: {},
     command: new SlashCommandBuilder()
       .setName(commandName)
       .setDescription(`Replies pong`)
@@ -65,11 +68,42 @@ function Ping() {
 
 function Create() {
   const commandName = `create`;
-  const subCommands = [`player`, `franchise`, `team`];
+  const subCommands = {
+    player: `player`,
+    franchise: `franchise`,
+    team: `franchise`,
+  };
   async function handler(interaction: CommandInteraction, subCommand?: string) {
-    return `${subCommand} ${JSON.stringify(
-      interaction.options.getString(`input`)
-    )} created`;
+    let res;
+    switch (subCommand) {
+      case subCommands.player:
+        res = await prisma.player.create({
+          data: {
+            name: interaction.options.getString(`name`) ?? `no name`,
+            discordId: interaction.user.id,
+            freeAgent: false,
+            steamId: ``,
+          },
+        });
+        break;
+      case subCommands.team:
+        res = await prisma.team.create({
+          data: {
+            name: interaction.options.getString(`name`) ?? ``,
+            acronym: interaction.options.getString(`acronym`) ?? ``,
+          },
+        });
+        break;
+      case subCommands.franchise:
+        res = await prisma.franchise.create({
+          data: {
+            name: interaction.options.getString(`name`) ?? ``,
+          },
+        });
+        break;
+    }
+
+    return `${subCommand} ${JSON.stringify(res?.name)} created`;
   }
 
   return {
@@ -80,34 +114,40 @@ function Create() {
       .setDescription(`Create`)
       .addSubcommand((subCommand) =>
         subCommand
-          .setName(subCommands[0])
+          .setName(subCommands.player)
           .setDescription(`Creates a player`)
           .addStringOption((opt) =>
             opt
-              .setName(`input`)
-              .setDescription(`Name of the ${subCommands[0]}`)
+              .setName(`name`)
+              .setDescription(`Name of the ${subCommands.player}`)
               .setRequired(true)
           )
       )
       .addSubcommand((subCommand) =>
         subCommand
-          .setName(subCommands[1])
+          .setName(subCommands.franchise)
           .setDescription(`Creates a franchise`)
           .addStringOption((opt) =>
             opt
-              .setName(`input`)
-              .setDescription(`Name of the ${subCommands[1]}`)
+              .setName(`name`)
+              .setDescription(`Name of the ${subCommands.franchise}`)
               .setRequired(true)
           )
       )
       .addSubcommand((subCommand) =>
         subCommand
-          .setName(subCommands[2])
+          .setName(subCommands.team)
           .setDescription(`Creates a team`)
           .addStringOption((opt) =>
             opt
-              .setName(`input`)
-              .setDescription(`Name of the ${subCommands[2]}`)
+              .setName(`name`)
+              .setDescription(`Name of the ${subCommands.team}`)
+              .setRequired(true)
+          )
+          .addStringOption((opt) =>
+            opt
+              .setName(`acronym`)
+              .setDescription(`Acryonym of the ${subCommands.team}`)
               .setRequired(true)
           )
       ),

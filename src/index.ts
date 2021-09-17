@@ -4,18 +4,18 @@ import { PrismaClient } from "@prisma/client";
 import { initClient, initCommands } from "./bot/init";
 import { initCommandHandlers } from "./bot/commands";
 
-const prisma = new PrismaClient();
+export const prisma = new PrismaClient();
 const app = express();
 
 app.use(bodyParser.json());
-app.use(express.static("public"));
+app.use(express.static(`public`));
 
 app.get(`/api`, async (req, res) => {
   res.json({ up: true });
 });
 
 const PORT = process.env.PORT || 3000;
-const server = app.listen(PORT, () =>
+app.listen(PORT, () =>
   console.log(
     `🚀 Server ready at: http://localhost:${PORT}\n⭐️ See sample requests: http://pris.ly/e/ts/rest-express#3-using-the-rest-api`
   )
