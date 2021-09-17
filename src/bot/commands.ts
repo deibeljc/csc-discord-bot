@@ -11,6 +11,14 @@ export function initCommandHandlers(client: Client) {
       if (command.commandName === interaction.commandName) {
         await interaction.reply(await command.handler(interaction));
       }
+      if (interaction.options.getSubcommand() in command.subCommands) {
+        await interaction.reply(
+          await command.handler(
+            interaction,
+            interaction.options.getSubcommand()
+          )
+        );
+      }
     }
   });
 
@@ -19,12 +27,14 @@ export function initCommandHandlers(client: Client) {
 
 function Ping() {
   const commandName = "ping";
+  enum subCommands {}
   async function handler(interaction: Interaction) {
     return "Pong";
   }
 
   return {
     commandName,
+    subCommands,
     command: new SlashCommandBuilder()
       .setName(commandName)
       .setDescription("Replies pong")
@@ -44,18 +54,32 @@ function Ping() {
 }
 
 function Create() {
+  enum subCommands {
+    Player = "Player",
+    Franchise = "Franchise",
+    Team = "Team",
+  }
   const commandName = "create";
-  async function handler(interaction: Interaction) {
-    return "Player created";
+  async function handler(interaction: Interaction, commandName?: string) {
+    return `Player created with ${commandName}`;
   }
 
   return {
     commandName,
+    subCommands,
     command: new SlashCommandBuilder()
       .setName(commandName)
       .setDescription("Create")
       .addSubcommand((subCommand) =>
-        subCommand.setName("player").setDescription("Creates a player")
+        subCommand
+          .setName(subCommands.Player)
+          .setDescription("Creates a player")
+      )
+      .addSubcommand((subCommand) =>
+        subCommand.setName(subCommands.Franchise).setName("Creates a franchise")
+      )
+      .addSubcommand((subCommand) =>
+        subCommand.setName(subCommands.Team).setName("Creates a team")
       ),
     handler,
   };
