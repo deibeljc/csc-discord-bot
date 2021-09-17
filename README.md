@@ -14,6 +14,16 @@ This server contains all relevant CSC information to run the league effectively.
 
 The main things that is built right now is the infrastructure for the discord bot API to easily bootstrap new commands and to interact with the DB.
 
+### Bot Commands
+
+If you want to play with the bot in its current (master branch) state, join this discord: https://discord.gg/g6CFf5ZQPW
+
+#### Commands
+
+- /create player
+- /create team
+- /create franchise
+
 ## Future
 
 The plan is to abstract the different commands into a unified core lib and share the relevant methods them across the discord bot and the API.
