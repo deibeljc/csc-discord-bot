@@ -8,10 +8,18 @@ export function initCommandHandlers(client: Client) {
     if (!interaction.isCommand()) return;
 
     for (const command of commands) {
-      if (command.commandName === interaction.commandName) {
+      // If we are only a top level command, resolve that way
+      if (
+        command.commandName === interaction.commandName &&
+        !interaction.options.getSubcommand()
+      ) {
         await interaction.reply(await command.handler(interaction));
       }
-      if (interaction.options.getSubcommand() in command.subCommands) {
+      // If we are a subcommand, resolve the command with a subcommand
+      if (
+        command.commandName === interaction.commandName &&
+        interaction.options.getSubcommand() in command.subCommands
+      ) {
         await interaction.reply(
           await command.handler(
             interaction,
@@ -60,8 +68,8 @@ function Create() {
     Team = "team",
   }
   const commandName = "create";
-  async function handler(interaction: Interaction, commandName?: string) {
-    return `Player created with ${commandName}`;
+  async function handler(interaction: Interaction, subCommand?: string) {
+    return `Player created with ${subCommand}`;
   }
 
   return {
