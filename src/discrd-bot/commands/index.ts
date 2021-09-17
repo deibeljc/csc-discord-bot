@@ -1,9 +1,10 @@
 import { Client } from "discord.js";
 import { Create } from "./Create";
 import { Ping } from "./Ping";
+import { Players } from "./Players";
 
 export function initCommandHandlers(client: Client) {
-  const commands = [Ping(), Create()];
+  const commands = [Ping(), Create(), Players()];
 
   client.on(`interactionCreate`, async (interaction) => {
     if (!interaction.isCommand()) return;
