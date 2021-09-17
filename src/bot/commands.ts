@@ -82,19 +82,34 @@ function Create() {
         subCommand
           .setName(subCommands[0])
           .setDescription(`Creates a player`)
-          .addStringOption((opt) => opt.setName(`input`).setRequired(true))
+          .addStringOption((opt) =>
+            opt
+              .setName(`input`)
+              .setDescription(`Name of the ${subCommands[0]}`)
+              .setRequired(true)
+          )
       )
       .addSubcommand((subCommand) =>
         subCommand
           .setName(subCommands[1])
           .setDescription(`Creates a franchise`)
-          .addStringOption((opt) => opt.setName(`input`).setRequired(true))
+          .addStringOption((opt) =>
+            opt
+              .setName(`input`)
+              .setDescription(`Name of the ${subCommands[1]}`)
+              .setRequired(true)
+          )
       )
       .addSubcommand((subCommand) =>
         subCommand
           .setName(subCommands[2])
           .setDescription(`Creates a team`)
-          .addStringOption((opt) => opt.setName(`input`).setRequired(true))
+          .addStringOption((opt) =>
+            opt
+              .setName(`input`)
+              .setDescription(`Name of the ${subCommands[2]}`)
+              .setRequired(true)
+          )
       ),
     handler,
   };
