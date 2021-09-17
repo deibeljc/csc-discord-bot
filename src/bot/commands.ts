@@ -134,7 +134,12 @@ function Create() {
               .setDescription(`Player's discord name`)
               .setRequired(true)
           )
-          .addStringOption((opt) => opt.setName(`tier`).addChoices(tierChoices))
+          .addStringOption((opt) =>
+            opt
+              .setName(`tier`)
+              .setDescription(`Tier for the ${subCommands.player}`)
+              .addChoices(tierChoices)
+          )
       )
       .addSubcommand((subCommand) =>
         subCommand
@@ -163,7 +168,12 @@ function Create() {
               .setDescription(`Acryonym of the ${subCommands.team}`)
               .setRequired(true)
           )
-          .addStringOption((opt) => opt.setName(`tier`).addChoices(tierChoices))
+          .addStringOption((opt) =>
+            opt
+              .setName(`tier`)
+              .setDescription(`Tier for the ${subCommands.team}`)
+              .addChoices(tierChoices)
+          )
       ),
     handler,
   };
