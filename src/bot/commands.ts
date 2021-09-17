@@ -10,7 +10,7 @@ export function initCommandHandlers(client: Client) {
     for (const command of commands) {
       console.log(
         `Handling ${
-          command.commandName
+          interaction.commandName
         }. SubCommand ${interaction.options.getSubcommand()}`
       );
       // If we are only a top level command, resolve that way
