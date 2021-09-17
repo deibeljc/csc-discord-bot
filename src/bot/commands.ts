@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { Client, Interaction } from "discord.js";
+import { Client, CommandInteraction, Interaction } from "discord.js";
 
 export function initCommandHandlers(client: Client) {
   const commands = [Ping(), Create()];
@@ -9,9 +9,7 @@ export function initCommandHandlers(client: Client) {
 
     for (const command of commands) {
       console.log(
-        `Handling ${
-          interaction.commandName
-        }. SubCommand ${interaction.options.getSubcommand()}`
+        `Handling ${interaction}. SubCommand ${interaction.options.getSubcommand()}`
       );
       // If we are only a top level command, resolve that way
       if (
@@ -41,7 +39,7 @@ export function initCommandHandlers(client: Client) {
 function Ping() {
   const commandName = `ping`;
   const subCommands: string[] = [];
-  async function handler(interaction: Interaction) {
+  async function handler(interaction: CommandInteraction) {
     return `Pong`;
   }
 
@@ -69,7 +67,7 @@ function Ping() {
 function Create() {
   const commandName = `create`;
   const subCommands = [`player`, `franchise`, `team`];
-  async function handler(interaction: Interaction, subCommand?: string) {
+  async function handler(interaction: CommandInteraction, subCommand?: string) {
     return `Player created with ${subCommand}`;
   }
 
