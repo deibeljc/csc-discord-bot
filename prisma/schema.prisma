@@ -8,6 +8,12 @@ datasource db {
   shadowDatabaseUrl = env("HEROKU_POSTGRESQL_GOLD_URL")
 }
 
+enum Tier {
+  MINOR
+  MAJOR
+  ELITE
+}
+
 model Franchise {
   id    String  @id @default(cuid())
   name  String
@@ -22,6 +28,7 @@ model Team {
   id          String     @id @default(cuid())
   name        String
   acronym     String
+  tier        Tier
   Players     Player[]
   MatchesWon  Match[]
   HomeMatches Match[]    @relation(name: "homeTeam")
@@ -35,6 +42,7 @@ model Player {
   name           String
   steamId        String // Is this even a thing we have/can get?
   discordId      String
+  tier           Tier
   Team           Team?      @relation(fields: [teamId], references: [id])
   teamId         String?
   freeAgent      Boolean

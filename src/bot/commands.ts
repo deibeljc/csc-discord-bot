@@ -1,3 +1,4 @@
+import { Tier } from ".prisma/client";
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { Client, CommandInteraction } from "discord.js";
 import { prisma } from "..";
@@ -84,6 +85,7 @@ function Create() {
             name: interaction.options.getString(`name`) ?? `no name`,
             discordId: interaction.options.getUser(`user`)?.id ?? ``,
             freeAgent: false,
+            tier: (interaction.options.getString(`tier`) as Tier) ?? Tier.MAJOR,
             steamId: ``,
           },
         });
@@ -93,6 +95,7 @@ function Create() {
           data: {
             name: interaction.options.getString(`name`) ?? ``,
             acronym: interaction.options.getString(`acronym`) ?? ``,
+            tier: (interaction.options.getString(`tier`) as Tier) ?? Tier.MAJOR,
           },
         });
         break;
@@ -108,7 +111,7 @@ function Create() {
     return `${subCommand} ${JSON.stringify(res?.name)} created`;
   }
 
-  console.log(`Registering commands for ${subCommands.team}`);
+  const tierChoices = Object.keys(Tier).map((t): [string, string] => [t, t]);
   return {
     commandName,
     subCommands,
@@ -131,6 +134,7 @@ function Create() {
               .setDescription(`Player's discord name`)
               .setRequired(true)
           )
+          .addStringOption((opt) => opt.setName(`tier`).addChoices(tierChoices))
       )
       .addSubcommand((subCommand) =>
         subCommand
@@ -159,6 +163,7 @@ function Create() {
               .setDescription(`Acryonym of the ${subCommands.team}`)
               .setRequired(true)
           )
+          .addStringOption((opt) => opt.setName(`tier`).addChoices(tierChoices))
       ),
     handler,
   };
