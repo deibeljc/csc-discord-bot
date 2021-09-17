@@ -71,7 +71,7 @@ function Create() {
   const subCommands = {
     player: `player`,
     franchise: `franchise`,
-    team: `franchise`,
+    team: `team`,
   };
   async function handler(interaction: CommandInteraction, subCommand?: string) {
     let res;
@@ -148,6 +148,7 @@ function Create() {
             opt
               .setName(`acronym`)
               .setDescription(`Acryonym of the ${subCommands.team}`)
+              .setRequired(true)
           )
       ),
     handler,
