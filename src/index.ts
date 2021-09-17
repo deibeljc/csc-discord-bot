@@ -1,8 +1,8 @@
 import express from "express";
 import bodyParser from "body-parser";
 import { PrismaClient } from "@prisma/client";
-import { initClient, initCommands } from "./bot/init";
-import { initCommandHandlers } from "./bot/commands";
+import { initClient, initCommands } from "./discrd-bot/init";
+import { initCommandHandlers } from "./discrd-bot/commands";
 
 export const prisma = new PrismaClient();
 const app = express();
