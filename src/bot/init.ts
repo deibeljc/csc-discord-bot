@@ -4,15 +4,15 @@ import { APIApplicationCommandOption, Routes } from "discord-api-types/v9";
 
 const token = process.env.DISCORD_TOKEN as string;
 const clientId = process.env.DISCORD_CLIENT_ID as string;
-const guildId = "796914528709247016";
+const guildId = `796914528709247016`;
 
-const rest = new REST({ version: "9" }).setToken(token);
+const rest = new REST({ version: `9` }).setToken(token);
 
 export async function initClient(): Promise<Client> {
   const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
   return new Promise((resolve) => {
-    client.once("ready", () => {
-      console.log("Client is ready");
+    client.once(`ready`, () => {
+      console.log(`Client is ready`);
       resolve(client);
     });
 
@@ -22,13 +22,15 @@ export async function initClient(): Promise<Client> {
 
 export async function initCommands(commands: any) {
   try {
-    console.log("Started refreshing application (/) commands.");
+    console.log(`Started refreshing application (/) commands.`);
+
+    console.log(JSON.stringify(commands));
 
     await rest.put(Routes.applicationGuildCommands(clientId, guildId), {
       body: commands,
     });
 
-    console.log("Successfully reloaded application (/) commands.");
+    console.log(`Successfully reloaded application (/) commands.`);
   } catch (error) {
     console.error(error);
   }
