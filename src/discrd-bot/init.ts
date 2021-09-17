@@ -4,7 +4,7 @@ import { Routes } from "discord-api-types/v9";
 
 const token = process.env.DISCORD_TOKEN as string;
 const clientId = process.env.DISCORD_CLIENT_ID as string;
-const guildId = `796914528709247016`;
+const guildId = `888488465132576768`;
 
 const rest = new REST({ version: `9` }).setToken(token);
 
