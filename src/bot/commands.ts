@@ -67,7 +67,9 @@ function Create() {
   const commandName = `create`;
   const subCommands = [`player`, `franchise`, `team`];
   async function handler(interaction: CommandInteraction, subCommand?: string) {
-    return `${subCommand} ${JSON.stringify(interaction.options.data)} created`;
+    return `${subCommand} ${JSON.stringify(
+      interaction.options.getString(`input`)
+    )} created`;
   }
 
   return {
@@ -80,13 +82,19 @@ function Create() {
         subCommand
           .setName(subCommands[0])
           .setDescription(`Creates a player`)
-          .addStringOption((str) => str.setName(`name`).setRequired(true))
+          .addStringOption((opt) => opt.setName(`input`).setRequired(true))
       )
       .addSubcommand((subCommand) =>
-        subCommand.setName(subCommands[1]).setDescription(`Creates a franchise`)
+        subCommand
+          .setName(subCommands[1])
+          .setDescription(`Creates a franchise`)
+          .addStringOption((opt) => opt.setName(`input`).setRequired(true))
       )
       .addSubcommand((subCommand) =>
-        subCommand.setName(subCommands[2]).setDescription(`Creates a team`)
+        subCommand
+          .setName(subCommands[2])
+          .setDescription(`Creates a team`)
+          .addStringOption((opt) => opt.setName(`input`).setRequired(true))
       ),
     handler,
   };
