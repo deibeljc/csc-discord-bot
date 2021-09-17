@@ -55,9 +55,9 @@ function Ping() {
 
 function Create() {
   enum subCommands {
-    Player = "player",
-    Franchise = "franchise",
-    Team = "team",
+    Player = "Player",
+    Franchise = "Franchise",
+    Team = "Team",
   }
   const commandName = "create";
   async function handler(interaction: Interaction, commandName?: string) {
@@ -76,10 +76,12 @@ function Create() {
           .setDescription("Creates a player")
       )
       .addSubcommand((subCommand) =>
-        subCommand.setName(subCommands.Franchise).setName("creates a franchise")
+        subCommand
+          .setName(subCommands.Franchise)
+          .setDescription("Creates a franchise")
       )
       .addSubcommand((subCommand) =>
-        subCommand.setName(subCommands.Team).setName("creates a team")
+        subCommand.setName(subCommands.Team).setName("Creates a team")
       ),
     handler,
   };
