@@ -81,7 +81,7 @@ function Create() {
           .setDescription("Creates a franchise")
       )
       .addSubcommand((subCommand) =>
-        subCommand.setName(subCommands.Team).setName("Creates a team")
+        subCommand.setName(subCommands.Team).setDescription("Creates a team")
       ),
     handler,
   };
