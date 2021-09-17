@@ -23,6 +23,7 @@ If you want to play with the bot in its current (master branch) state, join this
 - /create player
 - /create team
 - /create franchise
+- /players
 
 ## Future
 
