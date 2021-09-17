@@ -106,6 +106,7 @@ function Create() {
     return `${subCommand} ${JSON.stringify(res?.name)} created`;
   }
 
+  console.log(`Registering commands for ${subCommands.team}`);
   return {
     commandName,
     subCommands,
