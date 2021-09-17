@@ -76,10 +76,10 @@ function Create() {
           .setDescription("Creates a player")
       )
       .addSubcommand((subCommand) =>
-        subCommand.setName(subCommands.Franchise).setName("Creates a franchise")
+        subCommand.setName(subCommands.Franchise).setName("creates a franchise")
       )
       .addSubcommand((subCommand) =>
-        subCommand.setName(subCommands.Team).setName("Creates a team")
+        subCommand.setName(subCommands.Team).setName("creates a team")
       ),
     handler,
   };
