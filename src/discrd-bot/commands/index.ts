@@ -21,7 +21,7 @@ export function initCommandHandlers(client: Client) {
       if (
         command.commandName === interaction.commandName &&
         Object.keys(command.subCommands).includes(
-          interaction.options.getSubcommand()
+          interaction.options.getSubcommand(false) ?? ``
         )
       ) {
         console.log(
