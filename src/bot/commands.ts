@@ -115,7 +115,7 @@ function Create() {
       .addSubcommand((subCommand) =>
         subCommand
           .setName(subCommands.player)
-          .setDescription(`Creates a player`)
+          .setDescription(`Creates a ${subCommands.player}`)
           .addStringOption((opt) =>
             opt
               .setName(`name`)
@@ -126,7 +126,7 @@ function Create() {
       .addSubcommand((subCommand) =>
         subCommand
           .setName(subCommands.franchise)
-          .setDescription(`Creates a franchise`)
+          .setDescription(`Creates a ${subCommands.franchise}`)
           .addStringOption((opt) =>
             opt
               .setName(`name`)
@@ -137,7 +137,7 @@ function Create() {
       .addSubcommand((subCommand) =>
         subCommand
           .setName(subCommands.team)
-          .setDescription(`Creates a team`)
+          .setDescription(`Creates a ${subCommands.team}`)
           .addStringOption((opt) =>
             opt
               .setName(`name`)
