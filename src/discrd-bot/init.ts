@@ -1,6 +1,6 @@
 import { Client, Intents } from "discord.js";
 import { REST } from "@discordjs/rest";
-import { APIApplicationCommandOption, Routes } from "discord-api-types/v9";
+import { Routes } from "discord-api-types/v9";
 
 const token = process.env.DISCORD_TOKEN as string;
 const clientId = process.env.DISCORD_CLIENT_ID as string;

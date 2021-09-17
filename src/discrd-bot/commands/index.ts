@@ -13,7 +13,7 @@ export function initCommandHandlers(client: Client) {
       // If we are only a top level command, resolve that way
       if (
         command.commandName === interaction.commandName &&
-        !interaction.options.getSubcommand()
+        !interaction.options.getSubcommand(false)
       ) {
         await interaction.reply(await command.handler(interaction));
       }
