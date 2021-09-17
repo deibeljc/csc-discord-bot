@@ -1,75 +1,9 @@
-import { Tier } from ".prisma/client";
+import { Tier } from "@prisma/client";
+import { CommandInteraction } from "discord.js";
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { Client, CommandInteraction } from "discord.js";
-import { prisma } from "..";
+import { prisma } from "../..";
 
-export function initCommandHandlers(client: Client) {
-  const commands = [Ping(), Create()];
-
-  client.on(`interactionCreate`, async (interaction) => {
-    if (!interaction.isCommand()) return;
-
-    for (const command of commands) {
-      // If we are only a top level command, resolve that way
-      if (
-        command.commandName === interaction.commandName &&
-        !interaction.options.getSubcommand()
-      ) {
-        await interaction.reply(await command.handler(interaction));
-      }
-      // If we are a subcommand, resolve the command with a subcommand
-      if (
-        command.commandName === interaction.commandName &&
-        Object.keys(command.subCommands).includes(
-          interaction.options.getSubcommand()
-        )
-      ) {
-        console.log(
-          `Handling ${
-            interaction.commandName
-          }. SubCommand ${interaction.options.getSubcommand()}`
-        );
-        await interaction.reply(
-          await command.handler(
-            interaction,
-            interaction.options.getSubcommand()
-          )
-        );
-      }
-    }
-  });
-
-  return commands.map((command) => command.command);
-}
-
-function Ping() {
-  const commandName = `ping`;
-  async function handler(interaction: CommandInteraction) {
-    return `Pong`;
-  }
-
-  return {
-    commandName,
-    subCommands: {},
-    command: new SlashCommandBuilder()
-      .setName(commandName)
-      .setDescription(`Replies pong`)
-      .addStringOption((option) =>
-        option
-          .setName(`category`)
-          .setDescription(`Testing`)
-          .setRequired(true)
-          .addChoices([
-            [`Test 1`, `1`],
-            [`Test 2`, `2`],
-          ])
-      )
-      .toJSON(),
-    handler,
-  };
-}
-
-function Create() {
+export function Create() {
   const commandName = `create`;
   const subCommands = {
     player: `player`,
