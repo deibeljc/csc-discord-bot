@@ -15,13 +15,13 @@ export function initCommandHandlers(client: Client) {
         command.commandName === interaction.commandName &&
         !interaction.options.getSubcommand(false)
       ) {
-        await interaction.reply(await command.handler(interaction));
+        return await interaction.reply(await command.handler(interaction));
       }
       // If we are a subcommand, resolve the command with a subcommand
       if (
         command.commandName === interaction.commandName &&
         Object.keys(command.subCommands).includes(
-          interaction.options.getSubcommand(false) ?? ``
+          interaction.options.getSubcommand()
         )
       ) {
         console.log(
@@ -29,7 +29,7 @@ export function initCommandHandlers(client: Client) {
             interaction.commandName
           }. SubCommand ${interaction.options.getSubcommand()}`
         );
-        await interaction.reply(
+        return await interaction.reply(
           await command.handler(
             interaction,
             interaction.options.getSubcommand()
