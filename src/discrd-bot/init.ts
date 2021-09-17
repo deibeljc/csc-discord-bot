@@ -1,6 +1,6 @@
 import { Client, Intents } from "discord.js";
 import { REST } from "@discordjs/rest";
-import { Routes } from "discord-api-types/v9";
+import { APIApplicationCommandOption, Routes } from "discord-api-types/v9";
 
 const token = process.env.DISCORD_TOKEN as string;
 const clientId = process.env.DISCORD_CLIENT_ID as string;
@@ -20,9 +20,13 @@ export async function initClient(): Promise<Client> {
   });
 }
 
-export async function initCommands(commands: any) {
+export async function initCommands(commands: any[]) {
   try {
     console.log(`Started refreshing application (/) commands.`);
+
+    for (const command of commands) {
+      console.log(`Registered /${command?.name}`);
+    }
 
     await rest.put(Routes.applicationGuildCommands(clientId, guildId), {
       body: commands,

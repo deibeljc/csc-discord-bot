@@ -110,7 +110,8 @@ export function Create() {
               .addChoices(tierChoices)
               .setRequired(true)
           )
-      ),
+      )
+      .toJSON(),
     handler,
   };
 }
