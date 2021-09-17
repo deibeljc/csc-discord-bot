@@ -55,9 +55,9 @@ function Ping() {
 
 function Create() {
   enum subCommands {
-    Player = "Player",
-    Franchise = "Franchise",
-    Team = "Team",
+    Player = "player",
+    Franchise = "franchise",
+    Team = "team",
   }
   const commandName = "create";
   async function handler(interaction: Interaction, commandName?: string) {
